@@ -1,11 +1,16 @@
-# Puppet script to make changes to a configurations file
-file { '/home/ubuntu/.ssh/config':
-  ensure  => file,
-  content => "
-    Host your_server
-      HostName 107.22.143.169
-      User ubuntu
-      IdentityFile ~/.ssh/school
-      PasswordAuthentication no
-  ",
+# Setting up my client config file
+include stdlib
+
+file_line { 'Turn off passwd auth':
+  ensure => present,
+  path   => '/etc/ssh/ssh_config',
+  line   => '    PasswordAuthentication no',
+  replace => true,
+}
+
+file_line { 'Delare identity file':
+  ensure => present,
+  path   => '/etc/ssh/ssh_config',
+  line   => '     IdentityFile ~/.ssh/school',
+  replace => true,
 }
